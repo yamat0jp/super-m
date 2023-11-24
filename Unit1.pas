@@ -65,7 +65,7 @@ type
 const
   UPDATE_FPS = 50;
   DRAW_FPS = 10;
-  kasoku = 0.65;
+  kasoku = 0.5;
 
 var
   Form1: TForm1;
@@ -113,7 +113,7 @@ var
 function TPlayer.limitPlus(X, delta, MAX: Single): Single;
 begin
   if FDash then
-    MAX := MAX * 1.3;
+    MAX := MAX * 1.7;
   if X + delta > MAX then
     result := MAX
   else if X + delta < -MAX then
@@ -130,8 +130,11 @@ var
   n: integer;
 begin
   n := 0;
-  SetSpeed(Kasoku_X, Kasoku_Y);
-  if (Kasoku_X = 0)and(FSpeed_X <> 0) then
+  if FDash then
+    SetSpeed(1.7 * Kasoku_X, 1.7 * FKasoku_Y)
+  else
+    SetSpeed(FKasoku_X, FKasoku_Y);
+  if (Kasoku_X = 0) and (FSpeed_X <> 0) then
     FSpeed_X := 0.9 * FSpeed_X;
   FX := FX + FSpeed_X;
   FY := FY + FSpeed_Y;
